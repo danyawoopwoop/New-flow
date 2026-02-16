@@ -1,0 +1,164 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threads · История постов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1f1933;
+      --panel: rgba(255, 255, 255, 0.08);
+      --accent: #c4b5fd;
+      --text: #f8f5ff;
+      --muted: rgba(248, 245, 255, 0.65);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.22), transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(99, 102, 241, 0.22), transparent 50%),
+        var(--bg);
+      padding: 32px 24px 48px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .title {
+      font-size: clamp(24px, 2vw + 16px, 36px);
+      font-weight: 600;
+    }
+    .tag {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .nav a,
+    .nav button {
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      cursor: pointer;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .panel {
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+    }
+    .post-list {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .post-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(10, 8, 24, 0.45);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .post-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .post-meta a {
+      color: var(--text);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .post-meta small {
+      color: var(--muted);
+    }
+    .btn {
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .empty {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body data-page="threads-history" data-back-target="/threads">
+  <header>
+    <div>
+      <div class="title">Threads · История постов</div>
+      <div class="tag">Вы вошли как: <span data-bind="who"></span></div>
+    </div>
+    <div class="nav">
+      <a href="/">На главную</a>
+      <a href="/threads">Назад</a>
+      <form method="post" action="/logout">
+        <button type="submit">Выйти</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h3>История постов</h3>
+      <div id="history-list" class="post-list"></div>
+    </section>
+  </main>
+
+  <script>
+    function isBackForward(event) {
+      try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        if (nav && nav.type === "back_forward") return true;
+      } catch (e) {}
+      return !!event.persisted;
+    }
+
+    window.addEventListener("pageshow", function (event) {
+      if (!isBackForward(event)) return;
+      const target = document.body.getAttribute("data-back-target");
+      if (target) {
+        window.location.replace(target);
+        return;
+      }
+      document.querySelectorAll("form").forEach(function (form) {
+        form.reset();
+      });
+    });
+  </script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
