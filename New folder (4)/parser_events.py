@@ -6,8 +6,8 @@ from typing import Any
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 
-from ACCSPARSER import _load_users as _load_accounts_users
-from ACCSPARSER import _update_users_accounts_stats
+from accsparser import _load_users as _load_accounts_users
+from accsparser import _update_users_accounts_stats
 from ParserPost import _load_users as _load_posts_users
 from ParserPost import _update_users_posts_stats
 

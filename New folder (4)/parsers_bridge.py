@@ -13,7 +13,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 POSTS_PARSER_PATH = BASE_DIR / "ParserPost.py"
-ACCOUNTS_PARSER_PATH = BASE_DIR / "ACCSPARSER.PY"
+ACCOUNTS_PARSER_PATH = BASE_DIR / "accsparser.py"
 RUNTIME_DIR = BASE_DIR / "runtime"
 POSTS_HEALTH_PATH = RUNTIME_DIR / "parser_health_posts.json"
 ACCOUNTS_HEALTH_PATH = RUNTIME_DIR / "parser_health_accounts.json"
